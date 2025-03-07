@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoiceClone.AI - Personalized Voice Cloning Platform</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #f59e0b;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --success: #10b981;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            z-index: 100;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 0.5rem;
+            font-size: 1.75rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.6rem 1.5rem;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+        }
+        
+        .hero {
+            padding: 10rem 5% 5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 80vh;
+        }
+        
+        .hero-content {
+            flex: 1;
+            max-width: 600px;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--gray);
+            margin-bottom: 2rem;
+        }
+        
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+        
+        .hero-image img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .features {
+            padding: 5rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .section-title p {
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 0.5rem;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background-color: rgba(99, 102, 241, 0.1);
+            border-radius: 50%;
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card p {
+            color: var(--gray);
+        }
+        
+        .how-it-works {
+            background-color: #f1f5f9;
+            padding: 5rem 5%;
+        }
+        
+        .steps-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .step:last-child {
+            margin-bottom: 0;
+        }
+        
+        .step:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+        
+        .step-image {
+            flex: 1;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .step-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .step-content {
+            flex: 1;
+        }
+        
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        
+        .step-content h3 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .step-content p {
+            color: var(--gray);
+        }
+        
+        .cta {
+            padding: 5rem 5%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            text-align: center;
+        }
+        
+        .cta-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .cta p {
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .btn-cta {
+            background-color: white;
+            color: var(--primary);
+            font-weight: bold;
+            padding: 0.75rem 2rem;
+            font-size: 1.1rem;
+        }
+        
+        .btn-cta:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .demo-section {
+            padding: 5rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .demo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .recorder-container {
+            width: 100%;
+            max-width: 800px;
+            background-color: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-top: 3rem;
+        }
+        
+        .recorder-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .recorder-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .recorder-status {
+            display: flex;
+            align-items: center;
+            color: var(--gray);
+        }
+        
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background-color: var(--success);
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+        
+        .recorder-body {
+            text-align: center;
+            padding: 2rem 0;
+        }
+        
+        .microphone {
+            width: 80px;
+            height: 80px;
+            background-color: rgba(99, 102, 241, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .microphone:hover {
+            background-color: rgba(99, 102, 241, 0.2);
+        }
+        
+        .microphone i {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+        
+        .instructions {
+            color: var(--gray);
+            margin-bottom: 2rem;
+        }
+        
+        .record-controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        
+        .upload-option {
+            margin-top: 2rem;
+            color: var(--gray);
+        }
+        
+        .upload-option a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 5%;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 0.75rem;
+        }
+        
+        .footer-column ul li a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: white;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: background-color 0.3s;
+        }
+        
+        .social-icons a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .copyright {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                padding-top: 8rem;
+            }
+            
+            .hero-content {
+                text-align: center;
+                margin-bottom: 2rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .step, .step:nth-child(even) {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .close {
+            float: right;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: var(--gray);
+        }
+        
+        .waveform {
+            width: 100%;
+            height: 80px;
+            background-color: #f1f5f9;
+            border-radius: 0.5rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .waveform-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--gray);
+            transform: translateY(-50%);
+        }
+        
+        .waveform-bars {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+            padding: 0 1rem;
+        }
+        
+        .waveform-bar {
+            width: 3px;
+            background-color: var(--primary);
+            height: 30%;
+            border-radius: 1px;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <i class="fas fa-microphone-alt"></i>
+                VoiceClone.AI
+            </div>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#demo">Try Demo</a>
+                <a href="#pricing">Pricing</a>
+            </div>
+            <div>
+                <a href="#" class="btn btn-outline">Log In</a>
+                <a href="#" class="btn btn-primary">Sign Up</a>
+            </div>
+        </nav>
+    </header>
+    
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Create Your Digital Voice Twin</h1>
+                <p>Our AI-powered platform allows you to clone your voice with just a few minutes of audio. Generate natural-sounding speech that preserves your unique tone and style.</p>
+                <a href="#demo" class="btn btn-primary">Try It Now</a>
+                <a href="#how-it-works" class="btn btn-outline">Learn More</a>
+            </div>
+            <div class="hero-image">
+                <img src="/api/placeholder/500/400" alt="Voice Cloning Illustration">
+            </div>
+        </section>
+        
+        <section id="features" class="features">
+            <div class="section-title">
+                <h2>Powerful Voice Cloning Features</h2>
+                <p>Our platform combines cutting-edge AI technology with a user-friendly interface to deliver the best voice cloning experience.</p>
+            </div>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-microphone"></i>
+                    </div>
+                    <h3>Voice Sample Upload</h3>
+                    <p>Record directly in your browser or upload pre-recorded voice samples for AI training.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-comment-alt"></i>
+                    </div>
+                    <h3>Natural Speech Generation</h3>
+                    <p>Generate speech that closely mimics your voice, preserving tone, accent, and speaking style.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-sliders-h"></i>
+                    </div>
+                    <h3>Voice Customization</h3>
+                    <p>Fine-tune parameters like speaking rate, pitch, and emotional tone for perfect results.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-download"></i>
+                    </div>
+                    <h3>Export & Integration</h3>
+                    <p>Download your cloned voice in multiple formats or integrate with other applications via API.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="how-it-works" class="how-it-works">
+            <div class="section-title">
+                <h2>How It Works</h2>
+                <p>Creating your digital voice twin is easy with our streamlined process.</p>
+            </div>
+            
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-image">
+                        <img src="/api/placeholder/500/300" alt="Recording your voice">
+                    </div>
+                    <div class="step-content">
+                        <div class="step-number">1</div>
+                        <h3>Record Your Voice</h3>
+                        <p>Provide a few minutes of clear audio by recording directly through our platform or uploading existing samples.</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-image">
+                        <img src="/api/placeholder/500/300" alt="AI training process">
+                    </div>
+                    <div class="step-content">
+                        <div class="step-number">2</div>
+                        <h3>AI Training</h3>
+                        <p>Our advanced neural networks analyze your voice patterns, tone, and unique characteristics to create a digital model.</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-image">
+                        <img src="/api/placeholder/500/300" alt="Voice customization">
+                    </div>
+                    <div class="step-content">
+                        <div class="step-number">3</div>
+                        <h3>Customize & Generate</h3>
+                        <p>Enter text or select from templates, adjust parameters, and generate natural-sounding speech in your voice.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="demo" class="demo-section">
+            <div class="section-title">
+                <h2>Try Our Voice Cloning Demo</h2>
+                <p>Experience the power of our AI voice cloning technology. Record a short sample to create your digital voice twin.</p>
+            </div>
+            
+            <div class="demo-container">
+                <div class="recorder-container">
+                    <div class="recorder-header">
+                        <div class="recorder-title">Voice Recorder</div>
+                        <div class="recorder-status">
+                            <div class="status-dot"></div>
+                            Ready
+                        </div>
+                    </div>
+                    
+                    <div class="recorder-body">
+                        <div class="microphone">
+                            <i class="fas fa-microphone"></i>
+                        </div>
+                        
+                        <p class="instructions">Click the microphone to start recording. Read the sample text below for best results.</p>
+                        
+                        <div class="sample-text">
+                            <p>"The quick brown fox jumps over the lazy dog. Voice cloning technology has advanced significantly in recent years, making it possible to create realistic digital replicas of human voices with minimal training data."</p>
+                        </div>
+                        
+                        <div class="waveform">
+                            <div class="waveform-line"></div>
+                            <div class="waveform-bars">
+                                <div class="waveform-bar" style="height: 20%"></div>
+                                <div class="waveform-bar" style="height: 30%"></div>
+                                <div class="waveform-bar" style="height: 40%"></div>
+                                <div class="waveform-bar" style="height: 60%"></div>
+                                <div class="waveform-bar" style="height: 50%"></div>
+                                <div class="waveform-bar" style="height: 70%"></div>
+                                <div class="waveform-bar" style="height: 40%"></div>
+                                <div class="waveform-bar" style="height: 30%"></div>
+                                <div class="waveform-bar" style="height: 20%"></div>
+                                <div class="waveform-bar" style="height: 10%"></div>
+                                <div class="waveform-bar" style="height: 25%"></div>
+                                <div class="waveform-bar" style="height: 45%"></div>
+                                <div class="waveform-bar" style="height: 65%"></div>
+                                <div class="waveform-bar" style="height: 35%"></div>
+                                <div class="waveform-bar" style="height: 15%"></div>
+                                <div class="waveform-bar" style="height: 45%"></div>
+                                <div class="waveform-bar" style="height: 55%"></div>
+                                <div class="waveform-bar" style="height: 35%"></div>
+                                <div class="waveform-bar" style="height: 25%"></div>
+                                <div class="waveform-bar" style="height: 15%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="record-controls">
+                            <button class="btn btn-primary">Start Recording</button>
+                            <button class="btn btn-outline" disabled>Stop Recording</button>
+                        </div>
+                        
+                        <div class="upload-option">
+                            <p>Already have a recording? <a href="#">Upload an audio file</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="cta">
+            <div class="cta-container">
+                <h2>Ready to Clone Your Voice?</h2>
+                <p>Join thousands of users who have already created their digital voice twins for podcasts, voiceovers, accessibility tools, and more.</p>
+                <a href="#" class="btn btn-cta">Get Started for Free</a>
+                <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">No credit card required. Free plan includes 10 minutes of generated audio per month.</p>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>VoiceClone.AI</h3>
+                <p>Creating the future of personalized voice technology with advanced AI.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Features</h3>
+                <ul>
+                    <li><a href="#">Voice Cloning</a></li>
+                    <li><a href="#">Natural Speech</a></li>
+                    <li><a href="#">Voice Customization</a></li>
+                    <li><a href="#">API Access</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="#">Documentation</a></li>
+                    <li><a href="#">API Reference</a></li>
+                    <li><a href="#">Tutorials</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Company</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Pricing</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            &copy; 2025 VoiceClone.AI. All rights reserved.
+        </div>
+    </footer>
+    
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Log In to Your Account</h2>
+            <form>
+                <div style="margin-bottom: 1rem;">
+                    <label for="email" style="display: block; margin-bottom: 0.5rem;">Email</label>
+                    <input type="email" id="email" style="width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 0.375rem;">
+                </div>
+                <div style="margin-bottom: 2rem;">
+                    <label for="password" style="display: block; margin-bottom: 0.5rem;">Password</label>
+                    <input type="password" id="password" style="width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 0.375rem;">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Log In</button>
+            </form>
+            <p style="text-align: center; margin-top: 1.5rem;">Don't have an account? <a href="#" style="color: var(--primary);">Sign up</a></p>
+        </div>
+    </div>
+    
+    <script>
+        // Simple JavaScript for demo interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            const startButton = document.querySelector('.record-controls .btn-primary');
+            const stopButton = document.querySelector('.record-controls .btn-outline');
+            const micButton = document.querySelector('.microphone');
+            const statusText = document.querySelector('.recorder-status');
+            const statusDot = document.querySelector('.status-dot');
+            
+            startButton.addEventListener('click', function() {
+                startRecording();
+            });
+            
+            stopButton.addEventListener('click', function() {
+                stopRecording();
+            });
+            
+            micButton.addEventListener('click', function() {
+                if (startButton.disabled) {
+                    stopRecording();
+                } else {
+                    startRecording();
+                }
+            });
+            
+            function startRecording() {
+                startButton.disabled = true;
+                stopButton.disabled = false;
+                statusText.innerHTML = '<div class="status-dot" style="background-color: #ef4444;"></div> Recording...';
+                micButton.style.backgroundColor = 'rgba(239, 68, 68, 0.1)';
+                micButton.querySelector('i').style.color = '#ef4444';
+                
+                // Animate waveform bars
+                const bars = document.querySelectorAll('.waveform-bar');
+                animateBars(bars);
+            }
+            
+            function stopRecording() {
+                startButton.disabled = false;
+                stopButton.disabled = true;
+                statusText.innerHTML = '<div class="status-dot" style="background-color: #10b981;"></div> Processing...';
+                micButton.style.backgroundColor = 'rgba(99, 102, 241, 0.1)';
+                micButton.querySelector('i').style.color = 'var(--primary)';
+                
+                // Show processing for 2 seconds then show ready
+                setTimeout(function() {
+                    statusText.innerHTML = '<div class="status-dot"></div> Ready';
+                    
+                    // Show a simple modal with success message
+                    alert('Voice sample processed successfully! In a full implementation, you would now see options to generate speech with your cloned voice.');
+                }, 2000);
+            }
+            
+            function animateBars(bars) {
+                if (startButton.disabled) {
+                    bars.forEach(bar => {
+                        const randomHeight = Math.floor(Math.random() * 70) + 10;
+                        bar.style.height
